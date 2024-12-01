@@ -2,7 +2,7 @@ def distance(col1,col2):
     tabdist = []
     assert (len(col1)==len(col2))
     for i in range(len(col1)):
-        tabdist.append(abs(int(col1[i])-int(col2[i])))
+        tabdist.append(abs(col1[i])-col2[i])
     return tabdist
 
 def sim_score(col1,col2):
