@@ -77,8 +77,6 @@ def get_coords_antinodes(tab,coord1,coord2):
 
     return coords
 
-#def is_in line(tab,coord1,coord2)
-
 def get_diagonal_antinodes(tab,coord1,coord2):
     n = len(tab)
     m = len(tab[0])
@@ -115,7 +113,6 @@ def get_diagonal_antinodes(tab,coord1,coord2):
             current = (current[0]+abs(diffx),current[1]-abs(diffy))
 
     return coords
-
 
 def get_antinodes(specific_freq,freq):
     list_coords = get_coord_freq(specific_freq,freq)
