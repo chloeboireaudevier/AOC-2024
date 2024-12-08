@@ -1,3 +1,5 @@
+import math
+
 def print_tab(data):
     for line in data:
         print(line)
@@ -75,6 +77,46 @@ def get_coords_antinodes(tab,coord1,coord2):
 
     return coords
 
+#def is_in line(tab,coord1,coord2)
+
+def get_diagonal_antinodes(tab,coord1,coord2):
+    n = len(tab)
+    m = len(tab[0])
+
+    coords = []
+
+    diffy = (coord2[1] - coord1[1])
+
+    diffx = (coord2[0] - coord1[0])
+
+    print(diffx,diffy)
+
+    dir = diffy/diffx
+    print(dir)
+
+    current = coord1
+
+    if dir > 0 :
+        while current[0] >= 0 and current[1] >= 0:
+            coords.append(current)
+            current = (current[0]-abs(diffx),current[1]-abs(diffy))
+        current = coord1
+        while current[0] < n and current[1] < m:
+            coords.append(current)
+            current = (current[0]+abs(diffx),current[1]+abs(diffy))
+
+    else:
+        while current[0] >= 0 and current[1] < m:
+            coords.append(current)
+            current = (current[0]-abs(diffx),current[1]+abs(diffy))
+        current = coord1
+        while current[0] < n and current[1] >= 0:
+            coords.append(current)
+            current = (current[0]+abs(diffx),current[1]-abs(diffy))
+
+    return coords
+
+
 def get_antinodes(specific_freq,freq):
     list_coords = get_coord_freq(specific_freq,freq)
 
@@ -83,8 +125,11 @@ def get_antinodes(specific_freq,freq):
     for i in range(len(list_coords)):
         for j in range(i+1,len(list_coords)):
             coords_antinodes = get_coords_antinodes(specific_freq,list_coords[i],list_coords[j])
+            coords_antinodes += get_diagonal_antinodes(specific_freq,list_coords[i],list_coords[j])
             for coord in coords_antinodes:
                 tab_antinodes[coord[0]][coord[1]] = '#'
+
+
     return tab_antinodes
 
 def is_antinode(list_tabs,i,j):
@@ -121,9 +166,9 @@ def get_num_antinodes(content):
 
     merged_antinodes = merge_tabs(list_antinodes)
 
-    #print_tab(list_antinodes[0])
-    #print("------------------")
-    #print_tab(list_antinodes[1])
+    print_tab(list_antinodes[0])
+    print("------------------")
+    print_tab(list_antinodes[1])
 
     return count_occ(merged_antinodes,'#')
 
