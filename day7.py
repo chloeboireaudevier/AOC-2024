@@ -1,5 +1,5 @@
-file = open("testinputday7.txt",'r')
-#file = open("inputday7.txt",'r')
+#file = open("testinputday7.txt",'r')
+file = open("inputday7.txt",'r')
 content = file.readlines()
 file.close()
 print(content)
@@ -29,13 +29,17 @@ def format(data):
 #    else :
 #        return num1*num2
 
+def concat(num1,num2):
+    res = str(num1)+str(num2)
+    return int(res)
+
 def try_op_rec(res,op):
     if len(op) == 1 and op[0] == res:
         return True
     elif len(op) == 1 and op[0] != res :
         return False
     else:
-        return try_op_rec(res, [op[0]+op[1]]+op[2:]) or try_op_rec(res, [op[0]*op[1]]+op[2:])
+        return try_op_rec(res, [op[0]+op[1]]+op[2:]) or try_op_rec(res, [op[0]*op[1]]+op[2:]) or try_op_rec(res, [concat(op[0],op[1])]+op[2:])
     
 def keep_res_true_eq(list_res, list_op):
     keep = []
