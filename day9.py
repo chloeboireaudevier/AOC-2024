@@ -27,23 +27,65 @@ def get_number_disk(data):
             count +=1
     return count
 
+def get_size_same_car_front(data,index):
+    size = 1
+    while index+size < len(data) and data[index+size] == data[index]:
+        size+=1
+    return size
+
+def get_size_same_car_back(data,index):
+    size = 1
+    while index-size >=0 and data[index-size] == data[index]:
+        size+=1
+    return size
+
 def move_blocks(data):
     end_index = len(data)-1
-    num_disk = get_number_disk(data)
-    for i in range(num_disk):
-        if data[i] == '.':
-            replace = data[end_index]
-            while replace == '.':
-                end_index -=1
-                replace = data[end_index]
-            data[i] = replace
-            data[end_index] = '.'
-    return data[:num_disk]
+    #num_disk = get_number_disk(data)
+    index_blank = 0
+    i=int(data[-1])
+
+    while 0<=i :
+        print(i)
+        index_blank = 0
+
+        fit = False
+
+        while data[end_index]!= str(i):
+            end_index-=1
+
+        size_num = get_size_same_car_back(data,end_index)
+
+        while not fit and index_blank < end_index:
+            #print(i)
+            while index_blank < end_index and data[index_blank]!= '.':
+                #print(index_blank,i)
+                index_blank+=1
+
+            size_blank = get_size_same_car_front(data,index_blank)
+
+            if data[index_blank] == '.' and size_blank>=size_num and index_blank < end_index:
+                fit = True
+            else:
+                index_blank +=  size_blank
+
+
+        if fit :
+            while data[end_index] == str(i) and end_index > size_blank:
+                data[end_index] = '.'
+                data[index_blank] = str(i)
+                end_index-=1
+                index_blank +=1
+
+        i-=1
+
+    return data
 
 def get_checksum(ordered_data):
     sum = 0
     for i in range(len(ordered_data)):
-        sum += i*int(ordered_data[i])
+        if ordered_data[i]!='.':
+            sum += i*int(ordered_data[i])
     return sum
 
 formatted = format_disk(content)
