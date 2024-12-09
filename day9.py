@@ -69,17 +69,22 @@ def move_blocks(data):
             else:
                 index_blank +=  size_blank
 
-
+        #print('index blank',index_blank,'end',end_index)
+        #print(fit)
         if fit :
-            while data[end_index] == str(i) and end_index > size_blank:
+            while data[end_index] == str(i) and end_index > index_blank:
+                #print('loop')
                 data[end_index] = '.'
                 data[index_blank] = str(i)
                 end_index-=1
                 index_blank +=1
+                #print('data',data)
+                #print(end_index > size_blank)
 
         i-=1
 
     return data
+
 
 def get_checksum(ordered_data):
     sum = 0
@@ -93,3 +98,4 @@ print(formatted)
 ordered = move_blocks(formatted)
 print(ordered)
 print(get_checksum(ordered))
+#print(len(content)//2)
