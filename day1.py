@@ -14,7 +14,7 @@ def sim_score(col1,col2):
     similarity_score = sum(tabscore)
     return similarity_score
 
-f = open('inputday1.txt','r')
+f = open('input/inputday1.txt','r')
 content = f.readlines()
 print(content)
 f.close()

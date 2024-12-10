@@ -4,8 +4,8 @@ def print_tab(data):
     for line in data:
         print(line)
 
-#file = open("testinputday8.txt",'r')
-file = open("inputday8.txt",'r')
+#file = open("testinput/testinputday8.txt",'r')
+file = open("input/inputday8.txt",'r')
 content = file.readlines()
 file.close()
 

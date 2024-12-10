@@ -1,3 +1,5 @@
+#note : i used this code to understand why my code didn't work ONLY
+
 # Python program to search word in 2D grid in 8 directions
 
 # This function searches for the given word

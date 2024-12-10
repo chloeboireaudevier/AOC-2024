@@ -34,7 +34,7 @@ def is_safe_damped(array):
 
 
 
-f = open('inputday2.txt','r')
+f = open('input/inputday2.txt','r')
 content = f.readlines()
 print(content)
 f.close()

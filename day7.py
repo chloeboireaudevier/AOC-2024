@@ -1,5 +1,5 @@
-#file = open("testinputday7.txt",'r')
-file = open("inputday7.txt",'r')
+#file = open("testinput/testinputday7.txt",'r')
+file = open("input/inputday7.txt",'r')
 content = file.readlines()
 file.close()
 print(content)

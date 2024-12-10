@@ -39,7 +39,7 @@ def multiplication(data):
     return int(first_op) * int(second_op)
  
 # Start of code
-file = open("inputday3.txt",'r')
+file = open("input/inputday3.txt",'r')
 content = file.read()
 file.close()
 print(content)
