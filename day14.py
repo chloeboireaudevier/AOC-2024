@@ -1,5 +1,4 @@
 import re
-import math
 #DATA
 #file = open("testinput/testinputday14.txt",'r')
 file = open("input/inputday14.txt",'r')
