@@ -7,6 +7,7 @@ def print_tab(data):
 #file = open("testinput/testinputday15-2.txt",'r')
 file = open("input/inputday15.txt",'r')
 content = file.readlines()
+file.close()
 #print(content)
 
 def get_index_separator(data):
