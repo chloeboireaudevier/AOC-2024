@@ -13,17 +13,18 @@ data = []
 for i in range(0,len(content),4):
     machine = []
     for j in range(3):
-        #if j < 2:
-            machine.append([int(s) for s in re.findall(r'\b\d+\b', content[i+j])])
+        if j < 2:
+            machine.append([int(s) for s in re.findall(r'\b\d+\b', content[i+j])]) #Get every number from the string
         #PART TWO
-        #else:
-        #    to_app = [int(s) for s in re.findall(r'\b\d+\b', content[i+j])]
-        #    for k in range (len(to_app)):
-        #        to_app[k] += 10000000000000
-        #    machine.append(to_app)
+        else:
+            to_app = [int(s) for s in re.findall(r'\b\d+\b', content[i+j])]
+            for k in range (len(to_app)):
+                to_app[k] += 10000000000000
+            machine.append(to_app)
     data.append(machine)
 print(data)
 
+#Solution for part one
 def is_winnable(array):
     buttonA = array[0]
     buttonB = array[1]
@@ -49,22 +50,31 @@ def is_winnable(array):
 
     return mintokens if mintokens != math.inf else 0
 
+#Solves linear equations
+def solve_linear_combination(L1,L2,res):
+    x = np.array([[L1[0],L2[0]],
+                  [L1[1],L2[1]]])
+    
+    scalars = np.linalg.solve(x,res) #create solve function with loop to get positive numbers ? + is it fewest ?
+    print(scalars)
+    print(scalars[1])
+    nbA = round(scalars[0])
+    nbB = round(scalars[1])
+
+    return nbA, nbB
+
+#Solution for part two
 def is_winnable_part_two(array):
     buttonA = array[0]
     buttonB = array[1]
     prize = array[2]
 
-    x = np.array([[buttonA[0],buttonB[0]],
-                  [buttonA[1],buttonB[1]]])
-    
-    scalars = np.linalg.solve(x,prize)
-    print(scalars)
-    nbA = int(scalars[0])
-    nbB = int(scalars[1])
+    nbA,nbB = solve_linear_combination(buttonA,buttonB,prize)
 
     print(nbA,nbB)
 
-    if nbA <= 100 and nbB <= 100 and nbA*buttonA[0]+nbB*buttonB[0] == prize[0] and nbA*buttonA[1]+nbB*buttonB[1] == prize[1] :
+    #Check if meets what we want || for a part one solution, we need < 100
+    if 0<=nbA and 0<=nbB and nbA*buttonA[0]+nbB*buttonB[0] == prize[0] and nbA*buttonA[1]+nbB*buttonB[1] == prize[1] :
         nbTokens = 3*nbA + nbB
     else:
         nbTokens = 0
@@ -80,3 +90,4 @@ def get_prizes(data):
 #print(is_winnable_part_two(data[0]))
 #print(data)
 print(get_prizes(data))
+#print(solve_linear_combination([17,86],[84,37],[7870,6450]))

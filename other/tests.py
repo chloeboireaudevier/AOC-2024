@@ -13,3 +13,8 @@ y2 = ([8400,5400])
 print(np.linalg.solve(x2,y2))
 
 print(68.32//10)
+
+l = ['i','l','o','v']
+print(''.join(l))
+
+print(len('\n'))
