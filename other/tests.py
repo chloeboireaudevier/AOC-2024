@@ -18,3 +18,8 @@ l = ['i','l','o','v']
 print(''.join(l))
 
 print(len('\n'))
+
+designs ='a,b,c'
+designs = designs.split(',')
+print(designs)
+print(designs[1:])
