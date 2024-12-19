@@ -23,3 +23,5 @@ designs ='a,b,c'
 designs = designs.split(',')
 print(designs)
 print(designs[1:])
+h = [1,2,3]
+print(','.join([str(j) for j in h]))
