@@ -1,7 +1,8 @@
 import re
 
 #file = open("testinput/testinputday17.txt",'r')
-file = open("input/inputday17.txt",'r')
+file = open("testinput/testinputday17part2.txt",'r')
+#file = open("input/inputday17.txt",'r')
 content = file.readlines()
 file.close()
 print(content)
@@ -122,6 +123,40 @@ def run_program(content):
     output = ','.join([str(num) for num in output])
     return output
 
+def brute_force_part2(content):
+    registers,instructions = get_input(content)
+    i = 0
+    output = []
+    while output != instructions:
+        registers[0] = i
+        output = []
+        pointer = 0
+        while 0<= pointer < len(instructions):
+            opcode = instructions[pointer]
+            operand = instructions[pointer+1]
+            if opcode == 0:
+                registers = adv(registers,operand)
+            elif opcode == 1:
+                registers = bxl(registers,operand)
+            elif opcode == 2:
+                registers = bst(registers,operand)
+            elif opcode == 3:
+                pointer = jnz(registers,operand,pointer)
+            elif opcode == 4:
+                registers = bxc(registers,operand)
+            elif opcode == 5:
+                output.append(out(registers,operand))
+            elif opcode == 6:
+                registers = bdv(registers,operand)
+            else:
+                registers = cdv(registers,operand)
+            pointer+=2
+
+        output = ','.join([str(num) for num in output])
+        print(output)
+        i+=1
+    return i
+
 
 print(get_input(content))
-print(run_program(content))
+print(brute_force_part2(content))
