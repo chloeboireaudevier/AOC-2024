@@ -25,3 +25,8 @@ print(designs)
 print(designs[1:])
 h = [1,2,3]
 print(','.join([str(j) for j in h]))
+
+print(not False and True)
+a = None
+if a :
+    print("hello")

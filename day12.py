@@ -1,5 +1,5 @@
-file = open("testinput/testinputday12-1.txt",'r')
-#file = open("input/inputday12.txt",'r')
+#file = open("testinput/testinputday12-3.txt",'r')
+file = open("input/inputday12.txt",'r')
 content = file.readlines()
 file.close()
 #print(content)
@@ -13,7 +13,7 @@ def print_tab(data):
     for line in data:
         print(line)
 
-print_tab(content)
+#print_tab(content)
 
 global directions
 directions = [(0,1),(-1,0),(0,-1),(1,0)]
@@ -137,18 +137,76 @@ def get_regions_side(data,n,m,regions):
         sides.append(single_sides)
     return sides
 
+def count_corners(data,n,m,regions):
+    corners = []
+    for region in regions:
+        #print("------------REG : ",region)
+        count = 0
+        car = first_occ(region)
+        #print("CAR : ",car)
+        for i in range(n):
+            for j in range(m):
+                up = region[i-1][j] if i-1 >= 0 else None
+                down = region[i+1][j] if i+1 < n else None
+                left = region[i][j-1] if j-1 >= 0 else None
+                right = region[i][j+1] if j+1 < m else None
+                diag1 = region[i+1][j+1] if j+1 < m and i+1 < n else None
+                diag2 = region[i-1][j-1] if i-1 >= 0 and j-1 >=0 else None
+                diag3 = region[i+1][j-1] if j-1 >= 0 and i+1 < n else None
+                diag4 = region[i-1][j+1] if i-1 >= 0 and j+1 <n else None
+                if region[i][j] == car :
+                    if (not up or up != car ) and (not right or right!=car):
+                        count +=1
+                        #print(i,j)
+                    if (not up or up != car ) and (not left or left!=car):
+                        count +=1
+                        #print(i,j)
+                    if (not down or down != car ) and (not right or right!=car):
+                        count +=1
+                        #print(i,j)
+                    if (not down or down != car ) and (not left or left!=car):
+                        count +=1
+                        #print(i,j)
+                    if (up and up == car ) and (right and right==car) and diag4!=car:
+                        count +=1
+                        #print(i,j)
+                    if (up and up == car ) and (left and left==car)and diag2!=car:
+                        count +=1
+                        #print(i,j)
+                    if (down and down == car ) and (right and right==car)and diag1!=car:
+                        count +=1
+                        #print(i,j)
+                    if (down and down == car ) and (left and left==car)and diag3!=car:
+                        count +=1
+                        #print(i,j)
+                    #pb quand regions diagonales
+                #print(i,j,count)
+        corners.append(count)
+    return corners
+
 def get_price_fences(data):
     n = len(data)
     m = len(data[0])
+    print("before reg")
     regions = get_all_reg(data,n,m)
+    print("regions ok")
     area = get_regions_area(data,n,m,regions)
-    perimeter = get_regions_permieter(data,n,m,regions)
+    #perimeter = get_regions_permieter(data,n,m,regions)
+    sides = count_corners(data,n,m,regions)
+    print("sides ok")
     price = 0
-    print(area,perimeter)
-    for i in range(len(perimeter)):
-        price += area[i]*perimeter[i]
+    print(area,sides)
+    for i in range(len(area)):
+        price += area[i]*sides[i]
     return price
-
-print(get_regions_side(content,len(content),len(content[0]),get_all_reg(content,len(content),len(content[0]))))
-
+'''
+res = get_all_reg(content,len(content),len(content[0]))
+for r in res : 
+    print('-------------')
+    print_tab(r)
+print(count_corners(content,len(content),len(content[0]),res))
+'''
 print(get_price_fences(content))
+#print(get_regions_side(content,len(content),len(content[0]),get_all_reg(content,len(content),len(content[0]))))
+
+#print(get_price_fences(content))
