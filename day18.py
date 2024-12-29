@@ -65,18 +65,69 @@ def find_path_bfs(s, e, grid):
                 queue.append((item, path[:]))
     return None
 
+def get_paths(data,x,y):
+    dir_possible = []
+    for dir in directions:
+        curr = data[x+dir[0]][y+dir[1]] if 0<=x+dir[0] < len(data) and 0<=y+dir[1]<len(data[0]) else None
+        if curr and curr != '#':
+            dir_possible.append((x+dir[0],y+dir[1]))
+    return dir_possible
+
+def shortest_path(graph, node1, node2): #code from https://onestepcode.com/graph-shortest-path-python/
+    path_list = [[node1]]
+    path_index = 0
+    # To keep track of previously visited nodes
+    previous_nodes = {node1}
+    if node1 == node2:
+        return path_list[0]
+    #print(path_index,len(path_list))
+        
+    while path_index < len(path_list):
+        current_path = path_list[path_index]
+        last_node = current_path[-1]
+        next_nodes = graph[last_node]
+        #print(next_nodes)
+        #print(current_path)
+        # Search goal node
+        if node2 in next_nodes:
+            #print("oui")
+            current_path.append(node2)
+            return current_path
+        # Add new paths
+        for next_node in next_nodes:
+            
+            if not next_node in previous_nodes:
+                new_path = current_path[:]
+                new_path.append(next_node)
+                path_list.append(new_path)
+                # To avoid backtracking
+                previous_nodes.add(next_node)
+        # Continue to next path in list
+        path_index += 1
+    # No path is found
+    return []
+
+
+
 def solve(content,nbbytes):
     data = get_input(content)
     grid = create_grid(data,nbbytes)
-    print_tab(grid)
-    path = find_path_bfs((0,0),(size-1,size-1),grid)
-    return path
+    graph = {}
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            if grid[i][j] != '#':
+                dir_possible = get_paths(grid,i,j)
+                #print(dir_possible)
+                graph[(i,j)] = {x for x in dir_possible}
+                #print(graph[(i,j)],i,j)
+    return shortest_path(graph,(0,0),(size-1,size-1))
 
 #print(get_input(content))
 #print_tab(create_grid(get_input(content),nbBytes_test))
 path = solve(content,nbBytes_test)
 #print(path)
 #new_grid = create_grid(get_input(content),nbBytes_test)
+print(path)
 print('len',len(path))
 '''
 for p in path:

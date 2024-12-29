@@ -30,3 +30,8 @@ print(not False and True)
 a = None
 if a :
     print("hello")
+
+g = {}
+l = [(1,2),(3,4)]
+g['a'] = { x for x in l}
+print(g['a'])

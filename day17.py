@@ -153,7 +153,7 @@ def brute_force_part2(content):
             pointer+=2
 
         output = ','.join([str(num) for num in output])
-        print(output)
+        #print(output)
         i+=1
     return i
 
