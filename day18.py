@@ -122,15 +122,43 @@ def solve(content,nbbytes):
                 #print(graph[(i,j)],i,j)
     return shortest_path(graph,(0,0),(size-1,size-1))
 
+def solvepart2(content):
+    data = get_input(content)
+    nbbytes = 0
+    grid = create_grid(data,nbbytes)
+    graph = {}
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            if grid[i][j] != '#':
+                dir_possible = get_paths(grid,i,j)
+                #print(dir_possible)
+                graph[(i,j)] = {x for x in dir_possible}
+                #print(graph[(i,j)],i,j)
+    shortest = shortest_path(graph,(0,0),(size-1,size-1))
+    while shortest !=[] and nbbytes < len(data):
+        nbbytes+=1
+        grid = create_grid(data,nbbytes)
+        graph = {}
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] != '#':
+                    dir_possible = get_paths(grid,i,j)
+                    #print(dir_possible)
+                    graph[(i,j)] = {x for x in dir_possible}
+                    #print(graph[(i,j)],i,j)
+        shortest = shortest_path(graph,(0,0),(size-1,size-1))
+    return data[nbbytes-1],0<=nbbytes< len(data)
+
 #print(get_input(content))
 #print_tab(create_grid(get_input(content),nbBytes_test))
-path = solve(content,nbBytes_test)
+#path = solve(content,nbBytes_test)
 #print(path)
 #new_grid = create_grid(get_input(content),nbBytes_test)
-print(path)
-print('len',len(path))
+#print(path)
+#print('len',len(path))
 '''
 for p in path:
     new_grid[p[0]][p[1]] = 'O'
 print_tab(new_grid)
 '''
+print(solvepart2(content))
